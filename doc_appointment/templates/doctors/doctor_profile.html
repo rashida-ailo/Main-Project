@@ -1,0 +1,55 @@
+{% extends 'doctors/base_doctor.html' %}
+{% load static %}
+{% block content %}
+<div class="container mt-4">
+    <h3>My Profile</h3>
+
+    <div class="card mt-3">
+        <div class="card-body">
+            <div class="row align-items-center">
+
+                <div class="col-md-3 text-center">
+                    {% if profile.profile_picture %}
+                        <img src="{{ profile.profile_picture.url }}"
+                            class="img-fluid rounded-circle"
+                            style="width:150px;height:150px;"
+                            alt="Doctor Photo">
+                    {% else %}
+                        <img src="{% static 'img/default_image.jpg' %}"
+                            class="img-fluid rounded-circle"
+                            style="width:150px;height:150px;"
+                            alt="Doctor Photo">
+                    {% endif %}
+                </div>
+
+                <div class="col-md-9">
+                    <p><strong>Name:</strong> Dr. {{ profile.user.first_name }} {{ profile.user.last_name }}</p>
+                    <p><strong>Specialization:</strong> {{ profile.get_specialization_display }}</p>
+                    <p><strong>Qualification:</strong> {{ profile.qualification|default:"Not provided" }}</p>
+                    <p><strong>Experience:</strong> {{ profile.experience_years }} years</p>
+                    <p><strong>Consultation Fee:</strong>
+                        {% if profile.consultation_fee %}
+                            {{ profile.consultation_fee }}
+                        {% else %}
+                            Not set
+                        {% endif %}
+                    </p>
+                    <p><strong>Status:</strong>
+                        {% if profile.is_available %}
+                            Available
+                        {% else %}
+                            On Leave
+                        {% endif %}
+                    </p>
+                    <p><strong>About:</strong> {{ profile.bio|default:"No description added." }}</p>
+
+                    <a href="{% url 'edit_doctor_profile' %}" class="btn btn-primary mt-2">
+                        Edit Profile
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

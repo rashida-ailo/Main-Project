@@ -1,0 +1,166 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <style>
+        body {
+            font-family: Helvetica, Arial, sans-serif;
+            font-size: 13px;
+            color: #000;
+            line-height: 1.5;
+        }
+
+        .header {
+            width: 100%;
+            border-bottom: 3px solid #0a6c5d;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+        }
+
+        .header-table {
+            width: 100%;
+        }
+
+        .logo {
+            width: 110px;
+        }
+
+        .hospital-name {
+            font-size: 22px;
+            font-weight: bold;
+            color: #0a6c5d;
+            letter-spacing: 0.5px;
+        }
+
+        .hospital-address {
+            font-size: 12px;
+            color: #444;
+            margin-top: 3px;
+        }
+
+        .info-table {
+            width: 100%;
+            margin-top: 15px;
+            border-collapse: collapse;
+            font-size: 13px;
+        }
+
+        .info-table th,
+        .info-table td {
+            border: 1px solid #333;
+            padding: 8px;
+        }
+
+        .info-table th {
+            background-color: #f2f2f2;
+            width: 22%;
+            font-weight: bold;
+        }
+
+        h3 {
+            margin-top: 25px;
+            margin-bottom: 10px;
+            color: #0a6c5d;
+            font-size: 17px;
+            border-bottom: 1px solid #0a6c5d;
+            padding-bottom: 4px;
+        }
+
+        .medical-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+        }
+
+        .medical-table th,
+        .medical-table td {
+            border: 1px solid #333;
+            padding: 8px;
+            vertical-align: top;
+        }
+
+        .medical-table th {
+            background-color: #f7f7f7;
+            width: 30%;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+    <table class="header-table">
+        <tr>
+            <td width="25%">
+                <img src="{{ logo_path }}" class="logo" />
+            </td>
+            <td width="75%" valign="middle">
+                <div class="hospital-name">
+                    PG Medical Trust Hospital, Nilambur
+                </div>
+                <div class="hospital-address">
+                    VK Road, Nilambur, Malappuram, Kerala
+                </div>
+            </td>
+        </tr>
+    </table>
+</div>
+
+<!-- PATIENT & DOCTOR INFO -->
+<table class="info-table">
+    <tr>
+        <th>Patient Name</th>
+        <td>{{ patient.user.get_full_name }}</td>
+        <th>Patient ID</th>
+        <td>{{ patient.id }}</td>
+    </tr>
+    <tr>
+        <th>Date of Birth</th>
+        <td>{{ patient.date_of_birth|date:"Y-m-d" }}</td>
+        <th>Gender</th>
+        <td>{{ patient.gender|title }}</td>
+    </tr>
+    <tr>
+        <th>Doctor</th>
+        <td colspan="3">Dr. {{ doctor.user.get_full_name }}</td>
+    </tr>
+</table>
+
+<h3>Medical History</h3>
+
+<!-- MEDICAL HISTORY -->
+<table class="medical-table">
+    <tr>
+        <th>History of Surgery</th>
+        <td>{{ history.get_has_surgery_display }}</td>
+    </tr>
+    <tr>
+        <th>Smoking History</th>
+        <td>{{ history.get_smoker_display }}</td>
+    </tr>
+    <tr>
+        <th>Alcohol Use</th>
+        <td>{{ history.get_alcohol_use_display }}</td>
+    </tr>
+    <tr>
+        <th>Allergies</th>
+        <td>{{ history.allergies|default:"-" }}</td>
+    </tr>
+    <tr>
+        <th>Chronic Conditions</th>
+        <td>{{ history.chronic_conditions|default:"-" }}</td>
+    </tr>
+    <tr>
+        <th>Pain Severity</th>
+        <td>{{ history.get_pain_severity_display }}</td>
+    </tr>
+    <tr>
+        <th>Additional Notes</th>
+        <td>{{ history.notes|default:"-" }}</td>
+    </tr>
+</table>
+
+</body>
+</html>

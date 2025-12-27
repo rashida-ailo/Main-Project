@@ -1,0 +1,13 @@
+{% extends 'doctors/base_doctor.html' %}
+
+{% block content %}
+<h2>Reply to Admin</h2>
+
+<form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-primary">Send Reply</button>
+</form>
+
+<a href="{% url 'doctor_messages' %}" class="btn btn-secondary mt-2">Back to Messages</a>
+{% endblock %}

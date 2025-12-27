@@ -1,0 +1,53 @@
+{% extends 'patients/base_patient.html' %}
+
+{% block content %}
+<h2>My Medical History</h2>
+
+{% if history %}
+<table class="table table-bordered">
+    <tbody>
+        <tr>
+            <th>Last Updated</th>
+            <td>{{ history.updated_at|date:"Y-m-d H:i" }}</td>
+        </tr>
+        <tr>
+            <th>History of Surgery</th>
+            <td>{{ history.get_has_surgery_display }}</td>
+        </tr>
+        <tr>
+            <th>Smoking History</th>
+            <td>{{ history.get_smoker_display }}</td>
+        </tr>
+        <tr>
+            <th>Alcohol Use</th>
+            <td>{{ history.get_alcohol_use_display }}</td>
+        </tr>
+        <tr>
+            <th>Allergies</th>
+            <td>{{ history.allergies|default:"-" }}</td>
+        </tr>
+        <tr>
+            <th>Chronic Conditions</th>
+            <td>{{ history.chronic_conditions|default:"-" }}</td>
+        </tr>
+        <tr>
+            <th>Pain Severity</th>
+            <td>{{ history.get_pain_severity_display }}</td>
+        </tr>
+        <tr>
+            <th>Additional Notes</th>
+            <td>{{ history.notes|default:"-" }}</td>
+        </tr>
+    </tbody>
+</table>
+
+<a href="{% url 'patient_medical_history_pdf' %}"
+   class="btn btn-primary">
+    Download PDF
+</a>
+
+{% else %}
+<p>No medical history has been recorded yet.</p>
+{% endif %}
+
+{% endblock %}

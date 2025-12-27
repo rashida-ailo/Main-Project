@@ -1,0 +1,116 @@
+{% extends 'doctors/base_doctor.html' %}
+{% load static %}
+
+{% block content %}
+<h1 class="mb-4">Manage Availability</h1>
+
+<p><h1>Welcome, Dr. {{ doctor.user.first_name }}!</p></h1>
+
+<div class="row">
+    <!-- LEFT: Add Availability -->
+    <div class="col-md-4">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <h5 class="card-title">Add Availability</h5>
+
+                <form method="POST">
+                    {% csrf_token %}
+
+                    <!-- Days (Checkbox Grid) -->
+                    <label class="form-label">Select Days</label>
+                    <div class="border rounded p-2 mb-3">
+                        {% for value, label in days_of_week %}
+                        <div class="form-check">
+                            <input class="form-check-input"
+                                   type="checkbox"
+                                   name="days_of_week"
+                                   value="{{ value }}"
+                                   id="day_{{ value }}">
+                            <label class="form-check-label" for="day_{{ value }}">
+                                {{ label }}
+                            </label>
+                        </div>
+                        {% endfor %}
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Start Time</label>
+                        <input type="time" name="start_time" class="form-control" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">End Time</label>
+                        <input type="time" name="end_time" class="form-control" required>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary w-100">
+                        Add Slot
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- RIGHT: Existing Slots -->
+    <div class="col-md-8">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <h5 class="card-title">Existing Time Slots</h5>
+
+                {% if time_slots %}
+                <form method="POST" action="{% url 'bulk_delete_time_slots' %}">
+                    {% csrf_token %}
+
+                    <table class="table table-striped align-middle">
+                        <thead>
+                            <tr>
+                                <th>
+                                    <input type="checkbox" id="selectAll">
+                                </th>
+                                <th>Day</th>
+                                <th>Start</th>
+                                <th>End</th>
+                                <th>Active</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for slot in time_slots %}
+                            <tr>
+                                <td>
+                                    <input type="checkbox"
+                                           name="slot_ids"
+                                           value="{{ slot.id }}">
+                                </td>
+                                <td>{{ slot.get_day_of_week_display }}</td>
+                                <td>{{ slot.start_time|time:"H:i" }}</td>
+                                <td>{{ slot.end_time|time:"H:i" }}</td>
+                                <td>{{ slot.is_active|yesno:"Yes,No" }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+
+                    <button type="submit"
+                            class="btn btn-danger"
+                            onclick="return confirm('Delete selected time slots?');">
+                        Delete Selected
+                    </button>
+                </form>
+                {% else %}
+                <p>No time slots added yet.</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Select All Script -->
+<script>
+document.getElementById('selectAll')?.addEventListener('change', function () {
+    document.querySelectorAll('input[name="slot_ids"]').forEach(cb => {
+        cb.checked = this.checked;
+    });
+});
+</script>
+
+{% endblock %}

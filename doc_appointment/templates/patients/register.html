@@ -1,0 +1,163 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="register-container">
+  <div class="register-card">
+    <!-- Header -->
+    <div class="register-header">
+      <h1 class="register-title">Patient Registration</h1>
+      <p class="register-subtitle">Create your patient account</p>
+    </div>
+
+    <!-- Form Body -->
+    <div class="register-body">
+      <form method="post">
+        {% csrf_token %}
+
+        <!-- Personal Information -->
+        <div class="form-section">
+          <h3 class="section-title"><i class="fas fa-user"></i> Personal Information</h3>
+
+          <div class="form-grid">
+            <!-- Name -->
+            <div class="form-group-responsive">
+              <label class="form-label-responsive" for="FullName">
+                <i class="fas fa-id-card"></i> Name <span class="required">*</span>
+              </label>
+              <input type="text" class="form-control-responsive" placeholder="Enter your full name"
+                     id="FullName" maxlength="200" name="first_name" value="">
+              <span class="text-danger field-validation-valid" data-valmsg-for="FullName" data-valmsg-replace="true"></span>
+            </div>
+
+            <!-- Username -->
+            <div class="form-group-responsive">
+              <label class="form-label-responsive" for="Username">
+                <i class="fas fa-user"></i> Username <span class="required">*</span>
+              </label>
+              <input type="text" class="form-control-responsive" placeholder="Choose a username"
+                     id="Username" maxlength="50" name="username" value="">
+              <span class="text-danger field-validation-valid" data-valmsg-for="Username" data-valmsg-replace="true"></span>
+            </div>
+
+            <!-- Password -->
+            <div class="form-group-responsive">
+              <label class="form-label-responsive" for="Password">
+                <i class="fas fa-lock"></i> Password <span class="required">*</span>
+              </label>
+              <input type="password" class="form-control-responsive" placeholder="Enter your password"
+                     id="Password" maxlength="50" name="password1" value="">
+              <span class="text-danger field-validation-valid" data-valmsg-for="Password" data-valmsg-replace="true"></span>
+            </div>
+
+            <!-- Confirm Password -->
+            <div class="form-group-responsive">
+              <label class="form-label-responsive" for="ConfirmPassword">
+                <i class="fas fa-lock"></i> Confirm Password <span class="required">*</span>
+              </label>
+              <input type="password" class="form-control-responsive" placeholder="Confirm your password"
+                     id="ConfirmPassword" maxlength="50" name="password2" value="">
+              <span class="text-danger field-validation-valid" data-valmsg-for="ConfirmPassword" data-valmsg-replace="true"></span>
+            </div>
+
+            <!-- Date of Birth -->
+            <div class="form-group-responsive">
+              <label class="form-label-responsive" for="DateOfBirth">
+                <i class="fas fa-birthday-cake"></i> Date of Birth <span class="required">*</span>
+              </label>
+              <div class="date-input-wrapper">
+                <input type="date" class="form-control-responsive date-input" id="dateOfBirth" max="2025-11-29" min="1925-11-29" required name="date_of_birth" >
+                <i class="fas fa-calendar-alt date-input-icon"></i>
+              </div>
+              <small class="date-input-help"><i class="fas fa-info-circle"></i> Your age will be calculated automatically</small>
+              <span class="text-danger field-validation-valid" data-valmsg-for="DateOfBirth" data-valmsg-replace="true"></span>
+            </div>
+
+            <!-- Age -->
+            <div class="form-group-responsive">
+              <label class="form-label-responsive" for="Age">
+                <i class="fas fa-hourglass-half"></i> Age
+              </label>
+              <input type="number" min="0" max="150" readonly class="form-control-responsive" id="Age" name="age" value="0">
+              <span class="text-danger field-validation-valid" data-valmsg-for="Age" data-valmsg-replace="true"></span>
+            </div>
+
+            <!-- Gender -->
+            <div class="form-group-responsive">
+              <label class="form-label-responsive" for="Gender">
+                <i class="fas fa-venus-mars"></i> Gender <span class="required">*</span>
+              </label>
+              <select class="form-control-responsive" id="Gender" name="gender">
+                <option value="" selected>Select Gender</option>
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+                <option value="other">Other</option>
+              </select>
+              <span class="text-danger field-validation-valid" data-valmsg-for="Gender" data-valmsg-replace="true"></span>
+            </div>
+
+            <!-- Email -->
+            <div class="form-group-responsive">
+              <label class="form-label-responsive" for="Email">
+                <i class="fas fa-envelope"></i> Email Address
+              </label>
+              <input type="email" class="form-control-responsive" placeholder="your.email@example.com" id="Email" maxlength="150" name="email" value="">
+              <span class="text-danger field-validation-valid" data-valmsg-for="Email" data-valmsg-replace="true"></span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Medical History -->
+        <!-- <div class="form-group-responsive">
+          <label class="form-label-responsive" for="MedicalHistory">
+            <i class="fas fa-notes-medical"></i> Medical History (Optional)
+          </label>
+          <textarea rows="3" class="form-control-responsive" placeholder="List any allergies, meds, conditions..." id="MedicalHistory" name="medical_history"></textarea>
+          <span class="text-danger field-validation-valid" data-valmsg-for="MedicalHistory" data-valmsg-replace="true"></span>
+        </div> -->
+
+        <!-- Submit -->
+        <button type="submit" class="btn-register-submit" id="submitBtn">
+          <i class="fas fa-user-plus"></i> Complete Registration
+        </button>
+      </form>
+
+      <!-- Login Link -->
+      <div class="login-link-section">
+        <p>Already have an account?</p>
+        <a href="{% url 'login' %}"><i class="fas fa-sign-in-alt"></i> Login here</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- JS for live age calculation -->
+<script>
+  const dobInput = document.getElementById('dateOfBirth');
+  const ageInput = document.getElementById('Age');
+
+  function calculateAge(dob) {
+    const birthDate = new Date(dob);
+    const today = new Date();
+
+    let age = today.getFullYear() - birthDate.getFullYear();
+    const monthDiff = today.getMonth() - birthDate.getMonth();
+    const dayDiff = today.getDate() - birthDate.getDate();
+
+    if (monthDiff < 0 || (monthDiff === 0 && dayDiff < 0)) {
+      age--;
+    }
+
+    return age >= 0 ? age : 0;
+  }
+
+  dobInput.addEventListener('change', function() {
+    ageInput.value = calculateAge(this.value);
+  });
+
+  // Initial calculation if pre-filled
+  if (dobInput.value) {
+    ageInput.value = calculateAge(dobInput.value);
+  }
+</script>
+{% endblock content %}

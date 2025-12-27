@@ -1,0 +1,24 @@
+{% extends 'accounts/base_admin.html' %}
+
+{% block content %}
+<h2>Reply to Dr. {{ doctor_msg.doctor.user.get_full_name }}</h2>
+
+<div class="card p-4">
+    <p><strong>Original Subject:</strong> {{ doctor_msg.subject }}</p>
+    <p><strong>Original Message:</strong> {{ doctor_msg.message }}</p>
+    <hr>
+    <form method="post">
+        {% csrf_token %}
+        <div class="mb-3">
+            {{ form.subject.label_tag }}
+            {{ form.subject }}
+        </div>
+        <div class="mb-3">
+            {{ form.message.label_tag }}
+            {{ form.message }}
+        </div>
+        <button type="submit" class="btn btn-primary">Send Reply</button>
+        <a href="{% url 'admin_doctor_messages' %}" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>
+{% endblock %}

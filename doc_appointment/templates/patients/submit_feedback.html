@@ -1,0 +1,30 @@
+{% extends "patients/base_patient.html" %}
+{% load static %}
+
+{% block content %}
+<h2>Submit Feedback / Complaint</h2>
+
+<div class="card shadow-sm p-4">
+    <form method="POST">
+        {% csrf_token %}
+
+        <div class="mb-3">
+            <label for="doctor" class="form-label">Select Doctor</label>
+            <select name="doctor" id="doctor" class="form-control" required>
+                <option value="">-- Select Doctor --</option>
+                {% for doc in doctors %}
+                    <option value="{{ doc.id }}">{{ doc.user.get_full_name }} ({{ doc.get_specialization_display }})</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label for="message" class="form-label">Your Feedback / Complaint</label>
+            <textarea name="message" id="message" class="form-control" rows="5" placeholder="Write your feedback or complaint here..." required></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+
+{% endblock %}

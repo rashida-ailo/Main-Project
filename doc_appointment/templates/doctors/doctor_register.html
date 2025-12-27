@@ -1,0 +1,12 @@
+{% extends 'doctors/base_doctor.html' %}
+{% load static %}
+
+{% block content %}
+<h2>Doctor Registration</h2>
+<p>After registration, your account will be reviewed by the admin before login.</p>
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form }}
+    <button type="submit">Register</button>
+</form>
+{% endblock %}

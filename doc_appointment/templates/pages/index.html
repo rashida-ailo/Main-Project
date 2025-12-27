@@ -1,0 +1,149 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>PG Medical Trust Hospital</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="Free HTML Templates" name="keywords">
+    <meta content="Free HTML Templates" name="description">
+
+    <!-- Favicon -->
+    <link href="img/favicon.ico" rel="icon">
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@400;700&family=Roboto:wght@400;700&display=swap"
+        rel="stylesheet">
+
+    <!-- Icon Font Stylesheet -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Libraries Stylesheet -->
+    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+    <link href="lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+
+    <!-- Template Stylesheet -->
+    <link href="{%static 'css/style.css' %}" rel="stylesheet">
+</head>
+
+<body>
+  {% include "includes/header.html" %}
+
+    <!-- Hero Start -->
+    <div class="container-fluid bg-primary py-5 mb-5 hero-header">
+        <div class="container py-5">
+            <div class="row justify-content-start">
+                <div class="col-lg-8 text-center text-lg-start">
+                    <h5 class="d-inline-block text-primary text-uppercase border-bottom border-5"
+                        style="border-color: rgba(256, 256, 256, .3) !important;">Welcome To PG Medical Trust Hospital</h5>
+                    <h1 class="display-1 text-white mb-md-4">Best Healthcare Solution In Your City</h1>
+                    <div class="pt-2">
+                        <!-- <a href="#!" class="btn btn-light rounded-pill py-md-3 px-md-5 mx-2">Find Doctor</a> -->
+                        <a href="{% url 'login' %}" class="btn btn-outline-light rounded-pill py-md-3 px-md-5 mx-2">Appointment</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Hero End -->
+
+
+
+
+
+   
+
+
+
+   
+
+    <!-- Testimonial Start -->
+    <div class="container-fluid py-5">
+        <div class="container">
+            <div class="text-center mx-auto mb-5" style="max-width: 500px;">
+                <h5 class="d-inline-block text-primary text-uppercase border-bottom border-5">Testimonial</h5>
+                <h1 class="display-4">Patients Say About Our Services</h1>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="owl-carousel testimonial-carousel">
+                        <div class="testimonial-item text-center">
+                            <div class="position-relative mb-5">
+                                <img class="img-fluid rounded-circle mx-auto" src="img/testimonial-1.jpg" alt="">
+                                <div class="position-absolute top-100 start-50 translate-middle d-flex align-items-center justify-content-center bg-white rounded-circle"
+                                    style="width: 60px; height: 60px;">
+                                    <i class="fa fa-quote-left fa-2x text-primary"></i>
+                                </div>
+                            </div>
+                            <p class="fs-4 fw-normal">“Booking the appointment was easy, and the consultation was on time. I truly appreciate the professional approach.”</p>
+                            <hr class="w-25 mx-auto">
+                            <h3>Eisa Abdullah</h3>
+                            <h6 class="fw-normal text-primary mb-3">Engineer</h6>
+                        </div>
+                        <div class="testimonial-item text-center">
+                            <div class="position-relative mb-5">
+                                <img class="img-fluid rounded-circle mx-auto" src="img/testimonial-2.jpg" alt="">
+                                <div class="position-absolute top-100 start-50 translate-middle d-flex align-items-center justify-content-center bg-white rounded-circle"
+                                    style="width: 60px; height: 60px;">
+                                    <i class="fa fa-quote-left fa-2x text-primary"></i>
+                                </div>
+                            </div>
+                            <p class="fs-4 fw-normal">“The doctor was very patient and explained everything clearly. I felt comfortable and well cared for throughout the visit.”</p>
+                            <hr class="w-25 mx-auto">
+                            <h3>Dua Fathima</h3>
+                            <h6 class="fw-normal text-primary mb-3">Teacher</h6>
+                        </div>
+                        <div class="testimonial-item text-center">
+                            <div class="position-relative mb-5">
+                                <img class="img-fluid rounded-circle mx-auto" src="img/testimonial-3.jpg" alt="">
+                                <div class="position-absolute top-100 start-50 translate-middle d-flex align-items-center justify-content-center bg-white rounded-circle"
+                                    style="width: 60px; height: 60px;">
+                                    <i class="fa fa-quote-left fa-2x text-primary"></i>
+                                </div>
+                            </div>
+                            <p class="fs-4 fw-normal">“Excellent experience.
+                                 The doctor listened carefully and suggested the right treatment. Highly recommended.”</p>
+                            <hr class="w-25 mx-auto">
+                            <h3>Hood </h3>
+                            <h6 class="fw-normal text-primary mb-3">Architect</h6>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Testimonial End -->
+
+
+  
+
+
+    {% include "includes/footer.html" %}
+
+
+    <!-- Back to Top -->
+    <a href="#!" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
+
+
+    <!-- JavaScript Libraries -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="lib/easing/easing.min.js"></script>
+    <script src="lib/waypoints/waypoints.min.js"></script>
+    <script src="lib/owlcarousel/owl.carousel.min.js"></script>
+    <script src="lib/tempusdominus/js/moment.min.js"></script>
+    <script src="lib/tempusdominus/js/moment-timezone.min.js"></script>
+    <script src="lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
+
+    <!-- Template Javascript -->
+    <script src="js/main.js"></script>
+</body>
+
+</html>

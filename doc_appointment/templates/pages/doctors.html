@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<!-- Team Start -->
+<div class="container-fluid py-5">
+    <div class="container">
+        <div class="text-center mx-auto mb-5" style="max-width: 500px;">
+            <h5 class="d-inline-block text-primary text-uppercase border-bottom border-5">Our Doctors</h5>
+            <h1 class="display-4">Qualified Healthcare Professionals</h1>
+        </div>
+
+        <div class="owl-carousel team-carousel position-relative">
+            {% for doctor in doctors %}
+            <div class="team-item">
+                <div class="row g-0 bg-light rounded overflow-hidden">
+                    <!-- Doctor Image -->
+                    <div class="col-12 col-sm-5 h-100">
+                        <img class="img-fluid doctor-img" 
+                             src="{% if doctor.profile_picture %}{{ doctor.profile_picture.url }}{% else %}{% static 'img/default-doctor.jpg' %}{% endif %}" 
+                             alt="Dr. {{ doctor.user.get_full_name }}">
+                    </div>
+
+                    <!-- Doctor Info -->
+                    <div class="col-12 col-sm-7 h-100 d-flex flex-column">
+                        <div class="mt-auto p-4">
+                            <h3>Dr. {{ doctor.user.get_full_name }}</h3>
+                            <h6 class="fw-normal fst-italic text-primary mb-4">{{ doctor.get_specialization_display }}</h6>
+                            <p class="m-0">
+                                {% if doctor.qualification or doctor.experience_years or doctor.bio %}
+                                    {% if doctor.qualification %}{{ doctor.qualification }}{% endif %}
+                                    {% if doctor.experience_years %} with {{ doctor.experience_years }} years of experience{% endif %}
+                                    {% if doctor.bio %} - {{ doctor.bio }}{% endif %}
+                                {% else %}
+                                    No description available.
+                                {% endif %}
+                            </p>
+                        </div>
+
+                        <!-- Social Links -->
+                        <div class="d-flex mt-auto border-top p-4">
+                            {% if doctor.twitter_url %}
+                            <a class="btn btn-lg btn-primary btn-lg-square rounded-circle me-3" href="{{ doctor.twitter_url }}"><i class="fab fa-twitter"></i></a>
+                            {% endif %}
+                            {% if doctor.facebook_url %}
+                            <a class="btn btn-lg btn-primary btn-lg-square rounded-circle me-3" href="{{ doctor.facebook_url }}"><i class="fab fa-facebook-f"></i></a>
+                            {% endif %}
+                            {% if doctor.linkedin_url %}
+                            <a class="btn btn-lg btn-primary btn-lg-square rounded-circle" href="{{ doctor.linkedin_url }}"><i class="fab fa-linkedin-in"></i></a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <p class="text-center">No doctors available at the moment.</p>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+<!-- Team End -->
+
+<!-- Custom CSS -->
+<style>
+    .doctor-img {
+        width: 100%;
+        height: 250px;       /* fixed height for uniformity */
+        object-fit: cover;    /* crop image without distortion */
+        border-radius: 5px;
+    }
+
+    .team-carousel .team-item {
+        margin: 10px;
+    }
+</style>
+
+{% endblock %}
+{% include "footer.html" %}

@@ -1,0 +1,25 @@
+{% extends 'patients/base_patient.html' %}
+
+
+{% block content %}
+<div class="container mt-4">
+    <h3>My Profile</h3>
+
+    <div class="card mt-3">
+        <div class="card-body">
+            <p><strong>Name:</strong> {{ profile.user.first_name }} {{ profile.user.last_name }}</p>
+            <p><strong>Username:</strong> {{ profile.user.username }}</p>
+            <p><strong>Email:</strong> {{ profile.email|default:"Not provided" }}</p>
+            <p><strong>Gender:</strong> {{ profile.get_gender_display }}</p>
+            <p><strong>Date of Birth:</strong> {{ profile.date_of_birth }}</p>
+            <p><strong>Age:</strong> {{ profile.age|default:"Not calculated" }}</p>
+            <p><strong>Medical History:</strong></p>
+            <p>{{ profile.medical_history|default:"No medical history added." }}</p>
+
+            <a href="{% url 'edit_patient_profile' %}" class="btn btn-primary mt-2">
+                Edit Profile
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}

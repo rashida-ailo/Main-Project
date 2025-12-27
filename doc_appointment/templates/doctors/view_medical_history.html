@@ -1,0 +1,65 @@
+{% extends 'doctors/base_doctor.html' %}
+{% load static %}
+
+{% block content %}
+<h2>Medical History for {{ patient.user.get_full_name }}</h2>
+
+{% if history %}
+<table class="table table-bordered table-striped">
+    <tbody>
+        <tr>
+            <th>Last Updated</th>
+            <td>{{ history.updated_at|date:"Y-m-d H:i" }}</td>
+        </tr>
+        <tr>
+            <th>Last Updated By</th>
+            <td>Dr. {{ history.last_updated_by.user.get_full_name }}</td>
+        </tr>
+        <tr>
+            <th>History of Surgery</th>
+            <td>{{ history.get_has_surgery_display }}</td>
+        </tr>
+        <tr>
+            <th>Smoking History</th>
+            <td>{{ history.get_smoker_display }}</td>
+        </tr>
+        <tr>
+            <th>Alcohol Use</th>
+            <td>{{ history.get_alcohol_use_display }}</td>
+        </tr>
+        <tr>
+            <th>Allergies</th>
+            <td>{{ history.allergies|default:"-" }}</td>
+        </tr>
+        <tr>
+            <th>Chronic Conditions</th>
+            <td>{{ history.chronic_conditions|default:"-" }}</td>
+        </tr>
+        <tr>
+            <th>Pain Severity</th>
+            <td>{{ history.get_pain_severity_display }}</td>
+        </tr>
+        <tr>
+            <th>Additional Notes</th>
+            <td>{{ history.notes|default:"-" }}</td>
+        </tr>
+    </tbody>
+</table>
+
+{% else %}
+<p>No medical history found for this patient.</p>
+{% endif %}
+
+<div class="mt-3">
+    <a href="{% url 'add_medical_history' patient.id %}"
+       class="btn btn-primary">
+        Add / Edit Medical History
+    </a>
+
+    <a href="{% url 'doctor_dashboard' %}"
+       class="btn btn-secondary">
+        Back to Today's Appointments
+    </a>
+</div>
+
+{% endblock %}

@@ -1,0 +1,148 @@
+{% extends 'accounts/base_admin.html' %}
+
+{% block content %}
+<h2 class="mb-4">Admin Dashboard</h2>
+
+<!-- Summary Cards -->
+<div class="row mb-4">
+
+    <div class="col-md-3">
+        <div class="card shadow-sm text-center">
+            <div class="card-body">
+                <h6 class="text-muted">Total Doctors</h6>
+                <h3>{{ total_doctors }}</h3>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="card shadow-sm text-center">
+            <div class="card-body">
+                <h6 class="text-muted">Available Doctors</h6>
+                <h3 class="text-success">{{ available_doctors }}</h3>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="card shadow-sm text-center">
+            <div class="card-body">
+                <h6 class="text-muted">Patients Registered</h6>
+                <h3>{{ total_patients }}</h3>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="card shadow-sm text-center">
+            <div class="card-body">
+                <h6 class="text-muted">Total Appointments</h6>
+                <h3>{{ total_appointments }}</h3>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!-- Notifications and System Status -->
+<div class="row">
+
+    <!-- Notifications Column (Left) -->
+    <div class="col-md-6 order-md-1">
+
+        <!-- Doctor Messages Notification -->
+        <div class="card shadow-sm mb-3">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <span>Doctor Messages</span>
+                <i class="fas fa-bell"></i>
+            </div>
+            <div class="card-body">
+                {% if unread_messages > 0 %}
+                    <p>
+                        You have
+                        <strong>{{ unread_messages }}</strong>
+                        unread message(s) from doctors.
+                        <span class="badge bg-danger">{{ unread_messages }}</span>
+                    </p>
+                    <a href="{% url 'doctor_messages' %}" class="btn btn-primary btn-sm">
+                        View Messages
+                    </a>
+                {% else %}
+                    <p>No new messages.</p>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Patient Messages Notification -->
+        <div class="card shadow-sm mb-3">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <span>Patient Messages</span>
+                <i class="fas fa-envelope"></i>
+            </div>
+            <div class="card-body">
+                {% if unread_patient_messages > 0 %}
+                    <p>
+                        You have
+                        <strong>{{ unread_patient_messages }}</strong>
+                        unread message(s) from patients.
+                        <span class="badge bg-danger">{{ unread_patient_messages }}</span>
+                    </p>
+                    <a href="{% url 'patient_messages' %}" class="btn btn-primary btn-sm">
+                        View Messages
+                    </a>
+                {% else %}
+                    <p>No new messages from patients.</p>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Pending Doctors Notification -->
+        <div class="card shadow-sm mb-3">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <span>Pending Doctors</span>
+                <i class="fas fa-user-clock"></i>
+            </div>
+            <div class="card-body">
+                {% if pending_doctors_count > 0 %}
+                    <p>
+                        You have
+                        <strong>{{ pending_doctors_count }}</strong>
+                        pending doctor registration(s).
+                        <span class="badge bg-warning">{{ pending_doctors_count }}</span>
+                    </p>
+                    <a href="{% url 'pending_doctors' %}" class="btn btn-warning btn-sm">
+                        Review Pending
+                    </a>
+                {% else %}
+                    <p>No pending registrations.</p>
+                {% endif %}
+            </div>
+        </div>
+
+    </div>
+
+    <!-- System Status Column (Right) -->
+    <div class="col-md-6 order-md-2">
+        <div class="card shadow-sm">
+            <div class="card-header">
+                System Status
+            </div>
+            <div class="card-body">
+                <p><b>Doctors on leave:</b></p>
+                <ul>
+                    {% for doctor in doctors_list %}
+                        {% if not doctor.is_available %}
+                            <li>Dr. {{ doctor.user.first_name }} {{ doctor.user.last_name }}</li>
+                        {% endif %}
+                    {% empty %}
+                        <li>No doctors are on leave.</li>
+                    {% endfor %}
+                </ul>
+                <p><b>System running normally.</b></p>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}

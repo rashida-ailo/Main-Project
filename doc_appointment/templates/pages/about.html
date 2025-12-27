@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block content %}
+
+
+    <!-- About Start -->
+    <div class="container-fluid py-5">
+        <div class="container">
+            <div class="row gx-5">
+                <div class="col-lg-5 mb-5 mb-lg-0" style="min-height: 500px;">
+                    <div class="position-relative h-100">
+                        <img class="position-absolute w-100 h-100 rounded" src="{% static 'img/about.jpg' %}" alt="" style="object-fit: cover;">
+                    </div>
+                </div>
+                <div class="col-lg-7">
+                    <div class="mb-4">
+                        <h5 class="d-inline-block text-primary text-uppercase border-bottom border-5">About Us</h5>
+                        <h1 class="display-4">Best Medical Care For Yourself and Your Family</h1>
+                    </div>
+                    <p>PG Medical Trust Hospital is a well-established multi-speciality healthcare facility located in Nilambur,
+                         Malappuram District, Kerala. It is dedicated to providing high-quality and compassionate medical care across
+                          a broad spectrum of over 40 clinical specialties, including general medicine, surgery, orthopaedics, cardiology, nephrology, psychiatry and more. 
+                          The hospital combines modern medical technology with a patient-centric approach, ensuring comprehensive treatment and wellness support for individuals and families. With an infrastructure that includes well-equipped consultation rooms, advanced diagnostic services, a fully equipped NICU, ICU beds, operation theatres, and supportive amenities, the hospital strives to offer accessible healthcare with ethical standards and transparent practices. 
+                          PG Medical Trust Hospital has built a reputation for professional care delivered with empathy, 
+                        making it a trusted choice for patients in Nilambur and the surrounding communities.</p>
+                    <div class="row g-3 pt-3">
+                        <div class="col-sm-3 col-6">
+                            <div class="bg-light text-center rounded-circle py-4">
+                                <i class="fa fa-3x fa-user-md text-primary mb-3"></i>
+                                <h6 class="mb-0">Qualified<small class="d-block text-primary">Doctors</small></h6>
+                            </div>
+                        </div>
+                        <div class="col-sm-3 col-6">
+                            <div class="bg-light text-center rounded-circle py-4">
+                                <i class="fa fa-3x fa-procedures text-primary mb-3"></i>
+                                <h6 class="mb-0">Emergency<small class="d-block text-primary">Services</small></h6>
+                            </div>
+                        </div>
+                        <div class="col-sm-3 col-6">
+                            <div class="bg-light text-center rounded-circle py-4">
+                                <i class="fa fa-3x fa-microscope text-primary mb-3"></i>
+                                <h6 class="mb-0">Accurate<small class="d-block text-primary">Testing</small></h6>
+                            </div>
+                        </div>
+                        <div class="col-sm-3 col-6">
+                            <div class="bg-light text-center rounded-circle py-4">
+                                <i class="fa fa-3x fa-ambulance text-primary mb-3"></i>
+                                <h6 class="mb-0">Free<small class="d-block text-primary">Ambulance</small></h6>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- About End -->
+
+    {% endblock %}
+
+    {% include "footer.html" %}

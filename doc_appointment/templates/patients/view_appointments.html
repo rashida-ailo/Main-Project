@@ -1,0 +1,49 @@
+{% extends "patients/base_patient.html" %}
+{% load static %}
+
+{% block content %}
+<h2>My Appointments</h2>
+
+<table class="table table-striped table-bordered">
+    <thead class="table-dark">
+        <tr>
+            <th>Doctor</th>
+            <th>Specialization</th>
+            <th>Date</th>
+            <th>Time</th>
+            <th>Status</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% if appointments %}
+            {% for appt in appointments %}
+            <tr>
+                <td>{{ appt.doctor.user.get_full_name }}</td>
+                <td>{{ appt.doctor.get_specialization_display }}</td>
+                <td>{{ appt.appointment_date|date:"d M Y" }}</td>
+                <td>{{ appt.appointment_time|time:"H:i" }}</td>
+                <td>{{ appt.get_status_display }}</td>
+                <td>
+                    {% if appt.status != 'cancelled' %}
+                    <form method="POST" action="{% url 'cancel_appointment' appt.id %}" style="display:inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to cancel this appointment?');">
+                            Cancel
+                        </button>
+                    </form>
+                    {% else %}
+                        <span class="text-muted">Cancelled</span>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        {% else %}
+            <tr>
+                <td colspan="6" class="text-center">No appointments booked yet.</td>
+            </tr>
+        {% endif %}
+    </tbody>
+</table>
+
+{% endblock %}

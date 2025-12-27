@@ -1,0 +1,35 @@
+{% extends 'accounts/base_admin.html' %}
+{% block content %}
+<h2>Pending Doctor Registrations</h2>
+{% if pending %}
+<table class="table">
+    <thead>
+        <tr>
+            <th>Doctor Name</th>
+            <th>Email</th>
+            <th>Specialization</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for doctor in pending %}
+        <tr>
+            <td>{{ doctor.user.get_full_name }} ({{ doctor.user.username }})</td>
+            <td>{{ doctor.user.email }}</td>
+            <td>{{ doctor.get_specialization_display }}</td>
+            <td>
+                <form method="post" style="display:inline;">
+                    {% csrf_token %}
+                    <input type="hidden" name="doctor_id" value="{{ doctor.id }}">
+                    <button type="submit" name="action" value="approve" class="btn btn-success btn-sm">Approve</button>
+                    <button type="submit" name="action" value="reject" class="btn btn-danger btn-sm">Reject</button>
+                </form>
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<p>No pending doctors at the moment.</p>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,92 @@
+{% extends 'accounts/base_admin.html' %}
+
+{% block content %}
+<h1>Doctor Messages</h1>
+
+<a href="{% url 'compose_doctor_message' %}" class="btn btn-success mb-3">Compose New Message</a>
+
+<!-- Tabs -->
+<ul class="nav nav-tabs mb-3" id="messageTabs" role="tablist">
+    <li class="nav-item" role="presentation">
+        <button class="nav-link active" id="inbox-tab" data-bs-toggle="tab" data-bs-target="#inbox" type="button" role="tab" aria-controls="inbox" aria-selected="true">
+            Inbox
+        </button>
+    </li>
+    <li class="nav-item" role="presentation">
+        <button class="nav-link" id="sent-tab" data-bs-toggle="tab" data-bs-target="#sent" type="button" role="tab" aria-controls="sent" aria-selected="false">
+            Sent
+        </button>
+    </li>
+</ul>
+
+<div class="tab-content" id="messageTabsContent">
+    <!-- Inbox Tab -->
+    <div class="tab-pane fade show active" id="inbox" role="tabpanel" aria-labelledby="inbox-tab">
+        {% if inbox_messages %}
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Doctor</th>
+                    <th>Subject</th>
+                    <th>Message</th>
+                    <th>Date</th>
+                    <th>Read</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for msg in inbox_messages %}
+                <tr>
+                    <td>{{ msg.doctor.user.first_name }} {{ msg.doctor.user.last_name }}</td>
+                    <td>{{ msg.subject }}</td>
+                    <td>{{ msg.message }}</td>
+                    <td>{{ msg.created_at|date:"d M Y H:i" }}</td>
+                    <td>
+                        {% if msg.is_read %}✔{% else %}
+                        <form method="post" action="{% url 'mark_message_read' msg.id %}" style="display:inline;">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-sm btn-outline-success">Mark Read</button>
+                        </form>
+                        {% endif %}
+                    </td>
+                    <td>
+                        <a href="{% url 'reply_doctor_message' msg.id %}" class="btn btn-sm btn-primary">Reply</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <p>No messages in Inbox.</p>
+        {% endif %}
+    </div>
+
+    <!-- Sent Tab -->
+    <div class="tab-pane fade" id="sent" role="tabpanel" aria-labelledby="sent-tab">
+        {% if sent_messages %}
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Doctor</th>
+                    <th>Subject</th>
+                    <th>Message</th>
+                    <th>Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for msg in sent_messages %}
+                <tr>
+                    <td>{{ msg.doctor.user.first_name }} {{ msg.doctor.user.last_name }}</td>
+                    <td>{{ msg.subject }}</td>
+                    <td>{{ msg.message }}</td>
+                    <td>{{ msg.created_at|date:"d M Y H:i" }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <p>No sent messages.</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

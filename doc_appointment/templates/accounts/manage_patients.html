@@ -1,0 +1,43 @@
+{% extends 'accounts/base_admin.html' %}
+
+{% block content %}
+<h2>Manage Patients</h2>
+
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Gender</th>
+            <th>Age</th>
+            <th>Email</th>
+            <th>Registered On</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        {% for patient in patients %}
+        <tr>
+            <td>
+                {{ patient.user.first_name }} {{ patient.user.last_name }}
+            </td>
+            <td>{{ patient.get_gender_display }}</td>
+            <td>{{ patient.age|default:"—" }}</td>
+            <td>{{ patient.email|default:patient.user.email }}</td>
+            <td>{{ patient.created_at|date:"d M Y" }}</td>
+            <td>
+                <a href="{% url 'admin_patient_appointments' patient.id %}"
+                   class="btn btn-sm btn-primary">
+                    View Appointments
+                </a>
+            </td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="6" class="text-center">No patients found</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}

@@ -1,0 +1,131 @@
+{% extends "patients/base_patient.html" %}
+
+{% block content %}
+
+{% if messages %}
+    {% for message in messages %}
+        <div class="alert alert-danger">
+            {{ message }}
+        </div>
+    {% endfor %}
+{% endif %}
+
+<h2>Book Appointment</h2>
+
+<form method="POST">
+    {% csrf_token %}
+
+    <div class="mb-3">
+        <label for="specialization">Select Specialization</label>
+        <select id="specialization" class="form-control">
+            <option value="">-- Select Specialization --</option>
+            {% for spec in specializations %}
+                <option value="{{ spec.value }}">{{ spec.label }}</option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <div class="mb-3">
+        <label for="doctor">Select Doctor</label>
+        <select name="doctor" id="doctor" class="form-control" required>
+            <option value="">-- Select Doctor --</option>
+        </select>
+    </div>
+
+    <div class="mb-3">
+        <label for="appointment_date">Select Date</label>
+        <input type="date"
+               name="appointment_date"
+               id="appointment_date"
+               min="{{ today }}"
+               class="form-control"
+               required>
+    </div>
+
+    <div class="mb-3">
+        <label for="appointment_time">Available Time Slots</label>
+        <select name="appointment_time"
+                id="appointment_time"
+                class="form-control"
+                required>
+            <option value="">-- Select Time --</option>
+        </select>
+    </div>
+
+    <button type="submit" class="btn btn-primary">
+        Book Appointment
+    </button>
+</form>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+$(document).ready(function () {
+
+    // Fetch doctors when specialization changes
+    $('#specialization').change(function () {
+        var specialization = $(this).val();
+        var doctorSelect = $('#doctor');
+        var slotSelect = $('#appointment_time');
+
+        doctorSelect.empty().append('<option value="">-- Select Doctor --</option>');
+        slotSelect.empty().append('<option value="">-- Select Time --</option>');
+
+        if (specialization) {
+            $.ajax({
+                url: "{% url 'get_doctors_by_specialization' %}",
+                data: { specialization: specialization },
+                success: function (data) {
+                    if (data.doctors.length > 0) {
+                        data.doctors.forEach(function (doc) {
+                            doctorSelect.append(
+                                '<option value="' + doc.id + '">' + doc.name + '</option>'
+                            );
+                        });
+                    } else {
+                        doctorSelect.append('<option value="">No doctors available</option>');
+                    }
+                }
+            });
+        }
+    });
+
+    // Fetch slots
+    function fetchSlots() {
+        var doctorId = $('#doctor').val();
+        var date = $('#appointment_date').val();
+        var slotSelect = $('#appointment_time');
+
+        slotSelect.empty().append('<option value="">-- Select Time --</option>');
+
+        if (doctorId && date) {
+            $.ajax({
+                url: "{% url 'get_available_slots' %}",
+                data: {
+                    doctor_id: doctorId,
+                    date: date
+                },
+                success: function (data) {
+                    if (data.slots.length > 0) {
+                        data.slots.forEach(function (slot) {
+                            slotSelect.append(
+                                '<option value="' + slot + '">' + slot + '</option>'
+                            );
+                        });
+                    } else {
+                        slotSelect.append('<option value="">No slots available</option>');
+                    }
+                },
+                error: function (xhr) {
+                    console.error(xhr.responseText);
+                    slotSelect.append('<option value="">Error fetching slots</option>');
+                }
+            });
+        }
+    }
+
+    $('#doctor, #appointment_date').on('change', fetchSlots);
+});
+</script>
+
+
+{% endblock %}

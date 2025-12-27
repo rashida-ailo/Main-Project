@@ -1,0 +1,77 @@
+{% extends "patients/base_patient.html" %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2 class="mb-4">Welcome, {{ patient.user.first_name }}</h2>
+
+    <!-- Summary Cards -->
+    <div class="row mb-4">
+        <div class="col-md-4">
+            <div class="card text-white bg-primary mb-3 shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">Upcoming Appointments</h5>
+                    <p class="card-text display-6">{{ upcoming_appointments|length }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card text-white bg-success mb-3 shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">Medical History</h5>
+                    <p class="card-text display-6">
+                        {% if patient.medical_history %} Available {% else %} Not Added {% endif %}
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card text-white bg-warning mb-3 shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">Next Appointment</h5>
+                    <p class="card-text display-6">
+                        {% if upcoming_appointments %}
+                            {{ upcoming_appointments.0.appointment_date }}
+                        {% else %}
+                            N/A
+                        {% endif %}
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Upcoming Appointments List -->
+    <div class="card shadow-sm mb-4">
+        <div class="card-header bg-info text-white">
+            <h5 class="mb-0">Upcoming Appointments</h5>
+        </div>
+        <div class="card-body">
+            {% if upcoming_appointments %}
+                <ul class="list-group">
+                {% for appointment in upcoming_appointments %}
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <div>
+                            <strong>{{ appointment.appointment_date }} at {{ appointment.appointment_time }}</strong>
+                            <span>with Dr. {{ appointment.doctor.user.get_full_name }}</span>
+                        </div>
+                        <span class="badge bg-primary rounded-pill">{{ appointment.status|default:"Scheduled" }}</span>
+                    </li>
+                {% endfor %}
+                </ul>
+            {% else %}
+                <p class="text-muted">No upcoming appointments.</p>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="row">
+        <div class="col-md-6">
+            <a href="{% url 'patient_medical_history' %}" class="btn btn-outline-success w-100 mb-3">View Medical History</a>
+        </div>
+        <div class="col-md-6">
+            <a href="{% url 'view_appointments' %}" class="btn btn-outline-primary w-100 mb-3">View All Appointments</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,32 @@
+{% extends 'doctors/base_doctor.html' %}
+
+{% block content %}
+<h2>
+    {% if is_new %}
+        Add Medical History
+    {% else %}
+        Edit Medical History
+    {% endif %}
+    for {{ patient.user.get_full_name }}
+</h2>
+
+{% if not is_new %}
+<p class="text-muted">
+    Last updated on {{ patient.medical_history.updated_at|date:"Y-m-d H:i" }}
+</p>
+{% endif %}
+
+<form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+
+    <button type="submit" class="btn btn-primary">
+        {% if is_new %}Save{% else %}Update{% endif %} Medical History
+    </button>
+
+    <a href="{% url 'view_medical_history' patient.id %}" class="btn btn-secondary">
+        Cancel
+    </a>
+</form>
+
+{% endblock %}

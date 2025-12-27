@@ -1,0 +1,39 @@
+{% extends 'doctors/base_doctor.html' %}
+{% load static %}
+
+{% block content %}
+<h1>My Dashboard</h1>
+
+<p>Welcome, Dr. {{ doctor.user.first_name }}!</p>
+
+<h3>Today's Appointments ({{ todays_appointments.count }})</h3>
+
+{% if todays_appointments %}
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Time</th>
+            <th>Patient</th>
+            <th>Status</th>
+            <th>Reason</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for appointment in todays_appointments %}
+        <tr>
+            <td>{{ appointment.appointment_time|time:"H:i" }}</td>
+            <td>{{ appointment.patient.user.first_name }} {{ appointment.patient.user.last_name }}</td>
+            <td>{{ appointment.get_status_display }}</td>
+            <td>{{ appointment.reason }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<p>No appointments scheduled for today.</p>
+{% endif %}
+
+<hr>
+
+
+{% endblock %}

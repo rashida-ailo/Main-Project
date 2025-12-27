@@ -1,0 +1,178 @@
+/* ===== site.css - styles extracted from register template ===== */
+
+/* Base variables */
+:root{
+  --primary-color: #667eea;
+  --secondary-color: #764ba2;
+  --success-color: #10b981;
+  --text-color: #4a5568;
+  --text-muted: #6c757d;
+  --border-color: #e2e8f0;
+}
+
+/* Global */
+*{box-sizing:border-box}
+body, html{
+  margin:0;
+  padding:0;
+  min-height:100%;
+  overflow-x:hidden;
+  font-family: 'Inter', sans-serif;
+  background-image: url("../img/bg.png"); /* static/img/bg.png */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  color: var(--text-color);
+}
+body::before{
+  content:'';
+  position:fixed;
+  top:0; left:0; width:100%; height:100%;
+  background: rgba(0,0,0,0.02);
+  z-index:0; pointer-events:none;
+}
+
+/* Container & Card */
+.register-container{
+  position:relative;
+  z-index:1;
+  width:100%;
+  max-width:900px;
+  margin:0 auto;
+  padding:clamp(1rem,3vw,2rem);
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+.register-card{
+  background: rgba(255,255,255,0.95);
+  backdrop-filter: blur(20px);
+  border-radius: clamp(16px,3vw,24px);
+  box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+  border: 1px solid rgba(255,255,255,0.3);
+  overflow:hidden;
+  width:100%;
+  animation: slideUp .8s ease-out;
+  margin: clamp(1rem,2vw,2rem) 0;
+}
+
+/* animation */
+@keyframes slideUp{
+  from{ opacity:0; transform:translateY(30px); }
+  to  { opacity:1; transform:translateY(0); }
+}
+
+/* Header */
+.register-header{
+  background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+  color:white;
+  padding: clamp(1.5rem,4vw,2.5rem) clamp(1rem,3vw,2rem);
+  text-align:center;
+}
+.register-title{ font-size: clamp(1.5rem,4vw,2rem); font-weight:800; margin:0 0 .5rem 0 }
+.register-subtitle{ font-size: clamp(.813rem,2.5vw,.95rem); opacity:.9; margin:0; }
+
+/* Body & sections */
+.register-body{ padding: clamp(1.5rem,4vw,2.5rem) clamp(1rem,3vw,2rem); background: linear-gradient(to bottom, white 0%, #f8fafc 100%); }
+
+.form-section{ margin-bottom: clamp(1.5rem,4vw,2rem) }
+
+.section-title{
+  font-size: clamp(1rem,3vw,1.25rem);
+  font-weight:700;
+  color: var(--text-color);
+  margin-bottom: clamp(.75rem,2vw,1rem);
+  padding-bottom: clamp(.375rem,1vw,.5rem);
+  border-bottom: 2px solid var(--border-color);
+  display:flex;
+  align-items:center;
+  gap: clamp(.375rem,1vw,.5rem);
+}
+
+/* Form grid */
+.form-grid{ display:grid; grid-template-columns: 1fr; gap: clamp(.75rem,2vw,1rem) }
+@media(min-width:640px){
+  .form-grid{ grid-template-columns: repeat(2,1fr) }
+}
+
+/* Controls */
+.form-group-responsive{ margin-bottom:0 }
+.form-label-responsive{ display:flex; align-items:center; gap:.375rem; font-weight:600; color:var(--text-color); margin-bottom:.5rem; font-size:.95rem; }
+.required{ color:#dc3545; margin-left:2px; }
+
+.form-control-responsive,
+select.form-control-responsive,
+textarea.form-control-responsive{
+  width:100%;
+  padding: clamp(.75rem,2vw,.875rem) clamp(.875rem,2.5vw,1rem);
+  font-size: clamp(.875rem,2.5vw,1rem);
+  border: 2px solid var(--border-color);
+  border-radius: clamp(8px,2vw,10px);
+  transition: all .3s cubic-bezier(.4,0,.2,1);
+  background:white;
+  font-weight:500;
+  color:var(--text-color);
+}
+.form-control-responsive:focus{ outline:none; border-color:var(--primary-color); box-shadow: 0 0 0 4px rgba(102,126,234,0.1); transform:translateY(-1px) }
+.form-control-responsive:disabled{ background:#f1f5f9; opacity:.6; cursor:not-allowed }
+.form-control-responsive::placeholder{ color:#94a3b8 }
+
+/* Date input wrapper */
+.date-input-wrapper{ position:relative }
+.date-input-icon{ position:absolute; right: clamp(.75rem,2vw,1rem); top:50%; transform:translateY(-50%); color:#94a3b8; pointer-events:none }
+.date-input-help{ display:block; font-size:.813rem; color:var(--text-muted); margin-top:.375rem }
+
+/* Buttons */
+.btn-register-submit{
+  width:100%;
+  padding: clamp(1rem,2.5vw,1.125rem);
+  background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+  color:white;
+  border:none;
+  border-radius: clamp(8px,2vw,12px);
+  font-size: clamp(.938rem,2.5vw,1.0625rem);
+  font-weight:600;
+  cursor:pointer;
+  box-shadow: 0 4px 12px rgba(102,126,234,0.4);
+  display:flex; align-items:center; justify-content:center; gap:.375rem; margin-top: clamp(1rem,2vw,1.5rem);
+}
+.btn-register-submit:hover:not(:disabled){ background: linear-gradient(135deg,#5568d3 0%, #6a3f8f 100%); transform:translateY(-2px); box-shadow:0 6px 20px rgba(102,126,234,0.5) }
+.btn-register-submit:disabled{ opacity:.6; cursor:not-allowed }
+
+/* Loading spinner for btn */
+.btn-register-submit.loading{ position:relative; color:transparent }
+.btn-register-submit.loading::after{
+  content:''; position:absolute; width:clamp(18px,4vw,20px); height:clamp(18px,4vw,20px);
+  top:50%; left:50%; margin-left:clamp(-9px,-2vw,-10px); margin-top:clamp(-9px,-2vw,-10px);
+  border:2px solid white; border-radius:50%; border-top-color:transparent; animation: spin 1s linear infinite;
+}
+@keyframes spin{ to{ transform:rotate(360deg); } }
+
+/* Login link section */
+.login-link-section{ text-align:center; margin-top: clamp(1rem,2vw,1.5rem); padding-top: clamp(1rem,2vw,1.5rem); border-top:1px solid var(--border-color); font-size:.95rem }
+.login-link-section p{ margin:0 0 .5rem; color:var(--text-muted) }
+.login-link-section a{ color:var(--primary-color); font-weight:600; text-decoration:none }
+.login-link-section a:hover{ color:var(--secondary-color); text-decoration:underline }
+
+/* Responsive tweaks */
+@media(max-width:639px){
+  body, html{ background-attachment: scroll }
+  .register-container{ padding:1rem }
+  .form-control-responsive{ font-size:16px } /* prevent iOS zoom */
+}
+
+/* Touch devices */
+@media(hover:none) and (pointer:coarse){
+  .form-control-responsive, select.form-control-responsive, .btn-register-submit{ min-height:44px }
+}
+
+/* Print */
+@media print{
+  body{ background:white }
+  .register-card{ box-shadow:none; border:1px solid #000 }
+}
+
+/* small util */
+.text-danger{ color:#dc3545; font-size:.813rem; margin-top:.375rem; display:block }

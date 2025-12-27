@@ -1,0 +1,220 @@
+/* ===== Global Layout ===== */
+
+body {
+    background: #f3f7ff;
+    font-family: "Inter", sans-serif;
+}
+
+/* Center the login card */
+.login-container {
+    min-height: 90vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+/* Card */
+.login-card {
+    width: 100%;
+    max-width: 420px;
+    background: #fff;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+}
+
+/* ===== Header ===== */
+
+.login-header {
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.login-logo i {
+    font-size: 50px;
+    color: #007bff;
+}
+
+.login-title {
+    margin-top: 10px;
+    font-size: 26px;
+    font-weight: 600;
+}
+
+.login-subtitle {
+    font-size: 14px;
+    color: #6c757d;
+}
+
+/* ===== Form Styles ===== */
+
+.form-label-login {
+    font-weight: 600;
+    margin-bottom: 6px;
+    display: block;
+}
+
+.input-group-login {
+    position: relative;
+}
+
+.form-input-login {
+    width: 100%;
+    padding: 12px 40px 12px 40px;
+    border: 1px solid #d1d9e6;
+    border-radius: 8px;
+}
+
+.input-icon {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #555;
+}
+
+/* Hint below inputs */
+.input-hint {
+    margin-top: 5px;
+    display: flex;
+    align-items: center;
+    font-size: 13px;
+    color: #6c757d;
+}
+
+.input-hint i {
+    margin-right: 5px;
+}
+
+/* ===== Buttons ===== */
+
+.btn-login {
+    width: 100%;
+    padding: 12px;
+    background: #007bff;
+    border: none;
+    color: white;
+    border-radius: 8px;
+    font-size: 16px;
+    margin-top: 15px;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.btn-login:hover {
+    background: #0069d9;
+}
+
+.btn-verify:disabled {
+    background: #8fb6f0;
+    cursor: not-allowed;
+}
+
+/* ===== OTP Section ===== */
+
+.otp-section {
+    margin-top: 25px;
+}
+
+.otp-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.otp-icon {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    background: #e8f5ff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 10px;
+    color: #007bff;
+}
+
+.otp-title {
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.otp-subtitle {
+    font-size: 13px;
+    color: #6c757d;
+}
+
+/* OTP Input Boxes */
+.otp-inputs {
+    display: flex;
+    justify-content: space-between;
+    margin: 20px 0;
+}
+
+.otp-digit {
+    width: 45px;
+    height: 55px;
+    text-align: center;
+    font-size: 22px;
+    border: 1px solid #d1d9e6;
+    border-radius: 8px;
+}
+
+/* OTP Footer */
+.otp-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.countdown {
+    font-weight: 600;
+    color: #007bff;
+    display: flex;
+    align-items: center;
+}
+
+.countdown i {
+    margin-right: 5px;
+}
+
+.resend-btn {
+    background: transparent;
+    border: none;
+    color: #007bff;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.resend-btn:disabled {
+    color: #9bbce3;
+    cursor: not-allowed;
+}
+
+/* Divider */
+.divider {
+    text-align: center;
+    margin: 20px 0;
+    font-size: 14px;
+    color: #6c757d;
+}
+
+.register-section {
+    text-align: center;
+}
+
+.btn-register {
+    display: inline-block;
+    padding: 10px 20px;
+    background: #28a745;
+    color: white;
+    border-radius: 8px;
+    font-weight: 600;
+    text-decoration: none;
+    margin-top: 10px;
+}
+
+.btn-register:hover {
+    background: #218838;
+}

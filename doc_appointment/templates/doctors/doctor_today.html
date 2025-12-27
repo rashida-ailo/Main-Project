@@ -1,0 +1,146 @@
+{% extends 'doctors/base_doctor.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container-fluid">
+
+    <!-- ================= DASHBOARD HEADER ================= -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h3 class="mb-1">Doctor Dashboard</h3>
+            <p class="text-muted mb-0">
+                Welcome, Dr. {{ doctor.user.first_name }}
+            </p>
+        </div>
+
+        <a href="{% url 'doctor_appointments' %}" class="btn btn-outline-primary">
+            View All Appointments
+        </a>
+    </div>
+
+    <!-- ================= FLASH MESSAGES ================= -->
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-success">{{ message }}</div>
+        {% endfor %}
+    {% endif %}
+
+    <!-- ================= SUMMARY CARDS ================= -->
+    <div class="row mb-4">
+
+        <!-- Unread Messages Card -->
+        <div class="col-md-3">
+            <div class="card shadow-sm text-center">
+                <div class="card-body">
+                    <h6 class="text-muted">Unread Messages</h6>
+                    <h3>{{ unread_messages_count }}</h3>
+                    {% if unread_messages_count > 0 %}
+                        <a href="{% url 'doctor_inbox' %}" class="btn btn-sm btn-primary mt-2">
+                            View Inbox
+                        </a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card shadow-sm text-center">
+                <div class="card-body">
+                    <h6 class="text-muted">Today's Appointments</h6>
+                    <h3>{{ appointments.count }}</h3>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card shadow-sm text-center">
+                <div class="card-body">
+                    <h6 class="text-muted">Pending</h6>
+                    <h3>{{ appointments|length }}</h3>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card shadow-sm text-center">
+                <div class="card-body">
+                    <h6 class="text-muted">Completed Today</h6>
+                    <h3>{{ appointments|dictsort:"status"|length }}</h3>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- ================= TODAY'S APPOINTMENTS ================= -->
+    <div class="card shadow-sm">
+        <div class="card-header bg-white">
+            <h5 class="mb-0">Today’s Appointments</h5>
+        </div>
+
+        <div class="card-body p-0">
+            {% if appointments %}
+            <div class="table-responsive">
+                <table class="table table-striped table-hover align-middle mb-0">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Time</th>
+                            <th>Patient</th>
+                            <th>Gender</th>
+                            <th>Reason</th>
+                            <th>Status</th>
+                            <th width="280">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for appointment in appointments %}
+                        <tr>
+                            <td>{{ appointment.appointment_time|time:"H:i" }}</td>
+                            <td>{{ appointment.patient.user.first_name }} {{ appointment.patient.user.last_name }}</td>
+                            <td>{{ appointment.patient.gender|title }}</td>
+                            <td>{{ appointment.reason }}</td>
+                            <td>
+                                <span class="badge 
+                                    {% if appointment.status == 'completed' %}bg-success
+                                    {% elif appointment.status == 'pending' %}bg-warning
+                                    {% else %}bg-secondary{% endif %}">
+                                    {{ appointment.get_status_display }}
+                                </span>
+                                {% if appointment.status != 'completed' %}
+                                <form method="POST"
+                                      action="{% url 'mark_appointment_completed' appointment.id %}"
+                                      class="d-inline">
+                                    {% csrf_token %}
+                                    <button type="submit"
+                                            class="btn btn-sm btn-success ms-2">
+                                        Mark Completed
+                                    </button>
+                                </form>
+                                {% endif %}
+                            </td>
+                            <td>
+                                <a href="{% url 'view_medical_history' appointment.patient.id %}"
+                                   class="btn btn-sm btn-outline-info">
+                                    View History
+                                </a>
+
+                                <a href="{% url 'add_medical_history' appointment.patient.id %}"
+                                   class="btn btn-sm btn-primary">
+                                    Add / Edit History
+                                </a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% else %}
+                <p class="text-center text-muted my-3">
+                    No appointments scheduled for today.
+                </p>
+            {% endif %}
+        </div>
+    </div>
+
+</div>
+{% endblock %}

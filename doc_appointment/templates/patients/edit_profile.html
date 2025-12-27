@@ -1,0 +1,51 @@
+{% extends 'patients/base_patient.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <h3>Edit Profile</h3>
+
+    <form method="post" class="card p-4 mt-3">
+        {% csrf_token %}
+
+        <div class="mb-3">
+            <label class="form-label">Date of Birth</label>
+            <input type="date" name="date_of_birth"
+                   class="form-control"
+                   value="{{ profile.date_of_birth|date:'Y-m-d' }}">
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Gender</label>
+            <select name="gender" class="form-control">
+                {% for key, value in genders %}
+                    <option value="{{ key }}"
+                        {% if profile.gender == key %}selected{% endif %}>
+                        {{ value }}
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Email</label>
+            <input type="email" name="email"
+                   class="form-control"
+                   value="{{ profile.email }}">
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Medical History</label>
+            <textarea name="medical_history"
+                      class="form-control"
+                      rows="4">{{ profile.medical_history }}</textarea>
+        </div>
+
+        <button type="submit" class="btn btn-success">
+            Save Changes
+        </button>
+        <a href="{% url 'patient_profile' %}" class="btn btn-secondary ms-2">
+            Cancel
+        </a>
+    </form>
+</div>
+{% endblock %}

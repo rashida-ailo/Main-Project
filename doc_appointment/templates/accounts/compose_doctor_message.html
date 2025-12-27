@@ -1,0 +1,25 @@
+{% extends 'accounts/base_admin.html' %}
+
+{% block content %}
+<h2>Compose New Message</h2>
+
+<div class="card p-4">
+    <form method="post">
+        {% csrf_token %}
+        <div class="mb-3">
+            {{ form.doctor.label_tag }}
+            {{ form.doctor }}
+        </div>
+        <div class="mb-3">
+            {{ form.subject.label_tag }}
+            {{ form.subject }}
+        </div>
+        <div class="mb-3">
+            {{ form.message.label_tag }}
+            {{ form.message }}
+        </div>
+        <button type="submit" class="btn btn-primary">Send</button>
+        <a href="{% url 'doctor_messages' %}" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>
+{% endblock %}
