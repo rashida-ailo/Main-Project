@@ -294,7 +294,7 @@ def compose_doctor_message(request):
             msg.sender = request.user  # admin is sending
             msg.save()
             messages.success(request, "Message sent successfully!")
-            return redirect('doctor_messages')
+            return redirect('admin_doctor_messages')
     else:
         form = DoctorMessageForm()
 

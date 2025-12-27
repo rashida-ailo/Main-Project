@@ -21,9 +21,12 @@ def contact(request):
 
 
 def doctors(request):
-    # Get all doctors
-    doctors = DoctorProfile.objects.all()
-    
+    doctors = DoctorProfile.objects.filter(
+        user__is_active=True,
+        is_approved=True,
+        is_available=True
+    )
+
     context = {
         'doctors': doctors
     }

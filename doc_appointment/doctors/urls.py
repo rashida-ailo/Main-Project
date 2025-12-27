@@ -6,18 +6,14 @@ urlpatterns = [
     
     path('mydash/',views.doctor_today,name="doctor_dashboard"),
     
-    # path('today_appointments/',views.doctor_today,name="doctor_today"),
+    
 
     path('doctor_appointments/',views.doctor_appointments,name="doctor_appointments"),
 
     path('medical_history/<int:patient_id>/', views.view_medical_history, name='view_medical_history'),
-    path(
-    'doctors/add_medical_history/<int:patient_id>/<int:appointment_id>/',
-    views.add_medical_history,
-    name='add_medical_history'
-),
+    path('doctors/add_medical_history/<int:patient_id>/<int:appointment_id>/', views.add_medical_history,name='add_medical_history'),
 
-path(
+    path(
         'patient/<int:patient_id>/medical-history/edit/',
         views.add_or_edit_medical_history,
         name='add_medical_history'
@@ -26,7 +22,7 @@ path(
     'doctor/appointment/<int:appointment_id>/history/',
     views.appointment_history,
     name='appointment_history'
-),
+    ),
     path('doctor_profile/',views.doctor_profile,name="doctor_profile"),
     path('doctor_availability/',views.doctor_availability,name="doctor_availability"),
     path('delete-time-slot/<int:slot_id>/', views.delete_time_slot, name='delete_time_slot'),

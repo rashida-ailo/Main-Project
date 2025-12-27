@@ -1,12 +1,15 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .forms import PatientRegistrationForm     
-from django.contrib.auth.decorators import login_required    
+from django.contrib.auth.decorators import login_required 
+from django.contrib.auth import logout   
 from users.models import DoctorProfile, TimeSlot, Appointment, PatientProfile, Feedback      
 from django.contrib import messages 
 from django.http import JsonResponse
 from users.models import Specialization
-from datetime import date, datetime
 import datetime
+from datetime import date, datetime
+
+
 
 
 #----------------------------------------------------------------------------------
@@ -80,7 +83,7 @@ def edit_patient_profile(request):
 
         profile.gender = request.POST.get('gender')
         profile.email = request.POST.get('email')
-        profile.medical_history = request.POST.get('medical_history')
+        # profile.medical_history = request.POST.get('medical_history')
 
         profile.save()
         return redirect('patient_profile')
@@ -106,6 +109,7 @@ def patient_profile(request):
 
 
 def patient_logout(request):
+    logout(request)
     return render(request, 'pages/index.html')
 
 #----------------------------------------------------------------------------------

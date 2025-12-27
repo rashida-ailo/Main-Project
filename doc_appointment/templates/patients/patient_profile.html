@@ -13,8 +13,7 @@
             <p><strong>Gender:</strong> {{ profile.get_gender_display }}</p>
             <p><strong>Date of Birth:</strong> {{ profile.date_of_birth }}</p>
             <p><strong>Age:</strong> {{ profile.age|default:"Not calculated" }}</p>
-            <p><strong>Medical History:</strong></p>
-            <p>{{ profile.medical_history|default:"No medical history added." }}</p>
+            
 
             <a href="{% url 'edit_patient_profile' %}" class="btn btn-primary mt-2">
                 Edit Profile
