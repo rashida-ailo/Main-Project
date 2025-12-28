@@ -25,15 +25,17 @@
                 <td>{{ appt.appointment_time|time:"H:i" }}</td>
                 <td>{{ appt.get_status_display }}</td>
                 <td>
-                    {% if appt.status != 'cancelled' %}
-                    <form method="POST" action="{% url 'cancel_appointment' appt.id %}" style="display:inline;">
-                        {% csrf_token %}
-                        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to cancel this appointment?');">
-                            Cancel
-                        </button>
-                    </form>
+                    {% if appt.status != 'cancelled' and appt.status != 'completed' %}
+                        <form method="POST" action="{% url 'cancel_appointment' appt.id %}" style="display:inline;">
+                            {% csrf_token %}
+                            <button type="submit"
+                                    class="btn btn-danger btn-sm"
+                                    onclick="return confirm('Are you sure you want to cancel this appointment?');">
+                                Cancel
+                            </button>
+                        </form>
                     {% else %}
-                        <span class="text-muted">Cancelled</span>
+                        <span class="text-muted">{{ appt.get_status_display }}</span>
                     {% endif %}
                 </td>
             </tr>
