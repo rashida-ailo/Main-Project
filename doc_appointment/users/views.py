@@ -100,9 +100,7 @@ def admin_dashboard(request):
 
 
 
-@login_required
-def manage_doctors(request):
-    return render(request, 'accounts/manage_doctors.html')
+
 
 @login_required
 def admin_edit_doctor(request, doctor_id):
