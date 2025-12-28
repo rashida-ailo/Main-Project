@@ -6,8 +6,8 @@ from users.models import DoctorProfile, TimeSlot, Appointment, PatientProfile, F
 from django.contrib import messages 
 from django.http import JsonResponse
 from users.models import Specialization
-import datetime
-from datetime import date, datetime
+
+from datetime import date, datetime, timedelta
 
 
 
@@ -141,15 +141,15 @@ def book_appointments(request):
 
         doctor = get_object_or_404(DoctorProfile, id=doctor_id)
 
-        appointment_date_obj = datetime.datetime.strptime(
+        appointment_date_obj = datetime.strptime(
             appointment_date, "%Y-%m-%d"
         ).date()
 
-        appointment_time_obj = datetime.datetime.strptime(
+        appointment_time_obj = datetime.strptime(
             appointment_time, "%H:%M"
         ).time()
 
-        today = datetime.date.today()
+        today = date.today()
 
         # -------- RULE 1: Prevent past dates --------
         if appointment_date_obj < today:
@@ -221,7 +221,7 @@ def get_available_slots(request):
     doctor = get_object_or_404(DoctorProfile, id=doctor_id)
 
     try:
-        date_obj = datetime.datetime.strptime(date_str, "%Y-%m-%d").date()
+        date_obj = datetime.strptime(date_str, "%Y-%m-%d").date()
     except ValueError:
         return JsonResponse({'slots': []})
 
@@ -243,17 +243,18 @@ def get_available_slots(request):
     booked_times = Appointment.objects.filter(
         doctor=doctor,
         appointment_date=date_obj,
-        status__in=['pending', 'confirmed']
+        status__in=['pending', 'confirmed'],
+        appointment_time__isnull=False
     ).values_list('appointment_time', flat=True)
 
     booked_set = set(bt.strftime("%H:%M") for bt in booked_times)
 
-    SLOT_DURATION = datetime.timedelta(minutes=30)
+    SLOT_DURATION = timedelta(minutes=30)
     available_slots = []
 
     for slot in availability_qs:
-        start_dt = datetime.datetime.combine(date_obj, slot.start_time)
-        end_dt = datetime.datetime.combine(date_obj, slot.end_time)
+        start_dt = datetime.combine(date_obj, slot.start_time)
+        end_dt = datetime.combine(date_obj, slot.end_time)
 
         while start_dt + SLOT_DURATION <= end_dt:
             time_str = start_dt.strftime("%H:%M")
